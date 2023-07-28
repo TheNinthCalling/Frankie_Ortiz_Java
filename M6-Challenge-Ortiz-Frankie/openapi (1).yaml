@@ -1,0 +1,182 @@
+openapi: 3.0.1
+info:
+  title: OpenAPI definition
+  version: v0
+servers:
+  - url: http://localhost:8080
+    description: Generated server url
+paths:
+  /customers:
+    get:
+      tags:
+        - customer-controller
+      operationId: getCustomers
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Customer'
+    put:
+      tags:
+        - customer-controller
+      operationId: updateCustomer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Customer'
+        required: true
+      responses:
+        '204':
+          description: No Content
+    post:
+      tags:
+        - customer-controller
+      operationId: addCustomer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Customer'
+        required: true
+      responses:
+        '201':
+          description: Created
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Customer'
+  /customers/{id}:
+    get:
+      tags:
+        - customer-controller
+      operationId: getCustomerById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Customer'
+    delete:
+      tags:
+        - customer-controller
+      operationId: deleteCustomer
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '204':
+          description: No Content
+  /customers/lastName/{lastName}:
+    get:
+      tags:
+        - customer-controller
+      operationId: getCustomerByLastName
+      parameters:
+        - name: lastName
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Customer'
+  /customers/lastName/{lastName}/company/{company}:
+    get:
+      tags:
+        - customer-controller
+      operationId: getCustomersByLastNameAndCompany
+      parameters:
+        - name: lastName
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: company
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Customer'
+  /customers/company/{company}:
+    get:
+      tags:
+        - customer-controller
+      operationId: getCustomersByCompany
+      parameters:
+        - name: company
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Customer'
+components:
+  schemas:
+    Customer:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        firstName:
+          type: string
+        lastName:
+          type: string
+        company:
+          type: string
+        phone:
+          type: string
+        notes:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: '#/components/schemas/Note'
+    Note:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        content:
+          type: string
+        customerId:
+          type: integer
+          format: int32
