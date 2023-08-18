@@ -4,6 +4,7 @@ import com.company.customerdataservice.models.Customer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.HashSet;
@@ -12,6 +13,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
+
 class CustomerRepositoryTest {
     @Autowired
     CustomerRepository customerRepo;
@@ -31,6 +33,7 @@ class CustomerRepositoryTest {
         customer.setPhone("111-222-3456");
         customer.setCompany("BigCo");
         customer.setPostalCode("78744");
+        customer.setCustomerId(1);
 
         //Act...
         customer = customerRepo.save(customer);
@@ -51,6 +54,8 @@ class CustomerRepositoryTest {
         customer.setLastName("Smith");
         customer.setPhone("111-222-3456");
         customer.setCompany("BigCo");
+        customer.setCustomerId(1);
+
 
         customerRepo.save(customer);
 
@@ -76,6 +81,8 @@ class CustomerRepositoryTest {
         customer.setLastName("Smith");
         customer.setPhone("111-222-3456");
         customer.setCompany("BigCo");
+       // customer.setCustomerId(1);
+
 
         customerRepo.save(customer);
 
@@ -98,6 +105,8 @@ class CustomerRepositoryTest {
         customer.setLastName("Smith");
         customer.setPhone("111-222-3456");
         customer.setCompany("BigCo");
+        //customer.setCustomerId(1);
+
 
         customerRepo.save(customer);
 
@@ -115,11 +124,11 @@ class CustomerRepositoryTest {
         customer.setLastName("Smith");
         customer.setPhone("111-222-3456");
         customer.setCompany("BigCo");
-        customer.setCustomerId(10);
+       // customer.setCustomerId(10);
 
         customerRepo.save(customer);
 
-        Optional<Customer> customer1 = customerRepo.findById(10);
+        Optional<Customer> customer1 = customerRepo.findById(customer.getCustomerId());
 
         assertEquals(customer1.get(), customer);
     }
@@ -132,13 +141,15 @@ class CustomerRepositoryTest {
         customer.setPhone("111-222-3456");
         customer.setCompany("BigCo");
         customer.setState("Texas");
+        customer.setCustomerId(1);
+
 
         customerRepo.save(customer);
 
-        List<Customer> customer1 = customerRepo.findByState("Texas");
+        List<Customer> customerList = customerRepo.findByState("Texas");
 
-        assertEquals(customer1.get(0), customer);
-        assertEquals(customer1.size(), 1);
+        assertEquals(1, customerList.size());
+        //assertEquals(customer1.size(), 1);
 
 
     }

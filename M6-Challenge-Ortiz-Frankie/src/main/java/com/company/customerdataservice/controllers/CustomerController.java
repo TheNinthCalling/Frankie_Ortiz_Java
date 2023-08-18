@@ -38,12 +38,14 @@ public class CustomerController {
     public Customer addCustomer(@RequestBody Customer customer){
         return repo.save(customer);
     }
+
     // Update an existing customer record.
     @PutMapping("/customers")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateCustomer(@RequestBody Customer customer){
         repo.save(customer);
     }
+
     // Delete an existing customer record.
     @DeleteMapping("/customers/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
